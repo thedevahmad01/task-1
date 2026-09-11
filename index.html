@@ -1,0 +1,548 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision | Visual Gallery</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            scroll-behavior:smooth;
+        }
+
+        body{
+            background-color:#0F110A;
+            color:whitesmoke;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        a{
+            text-decoration:none;
+            color:whitesmoke;
+        }
+
+        header{
+            width:100%;
+            min-height:100px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:20px 6%;
+            position:sticky;
+            top:0;
+            z-index:1000;
+            background:rgba(15,17,10,0.95);
+            border-bottom:1px solid rgba(199,255,50,0.15);
+        }
+
+        .box-1{
+            font-size:20px;
+        }
+
+        .box-1 h1{
+            letter-spacing:1px;
+        }
+
+        .box-1 b{
+            color:#C7FF32;
+        }
+
+        .box-2{
+            display:flex;
+            gap:45px;
+            font-size:17px;
+        }
+
+        .box-2 a{
+            transition:0.3s;
+        }
+
+        .box-2 a:hover{
+            color:#C7FF32;
+        }
+
+        .hero{
+            min-height:650px;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            text-align:center;
+            padding:80px 20px;
+        }
+
+        .hero h2{
+            font-size:70px;
+            line-height:1.05;
+            margin-bottom:25px;
+        }
+
+        .green{
+            color:#C7FF32;
+        }
+
+        .hero p{
+            max-width:700px;
+            line-height:1.8;
+            color:#bcbcb8;
+            font-size:17px;
+        }
+
+        .hero-btn{
+            margin-top:35px;
+            padding:15px 32px;
+            border:1px solid #C7FF32;
+            border-radius:30px;
+            color:#C7FF32;
+            transition:0.3s;
+        }
+
+        .hero-btn:hover{
+            background:#C7FF32;
+            color:#0F110A;
+        }
+
+        section{
+            padding:90px 6%;
+        }
+
+        .section-title{
+            text-align:center;
+            margin-bottom:50px;
+        }
+
+        .section-title h2{
+            font-size:45px;
+            margin-bottom:12px;
+        }
+
+        .section-title p{
+            color:#999;
+        }
+
+        .gallery{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:22px;
+        }
+
+        .gallery-item{
+            height:320px;
+            overflow:hidden;
+            border-radius:18px;
+            border:1px solid rgba(199,255,50,0.15);
+            cursor:pointer;
+            background:#191c12;
+        }
+
+        .gallery-item img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            transition:0.5s;
+        }
+
+        .gallery-item:hover img{
+            transform:scale(1.08);
+        }
+
+        .about{
+            display:flex;
+            align-items:center;
+            gap:60px;
+        }
+
+        .about-text{
+            flex:1;
+        }
+
+        .about-text h2{
+            font-size:48px;
+            margin-bottom:20px;
+        }
+
+        .about-text p{
+            color:#aaa;
+            line-height:1.9;
+            margin-bottom:18px;
+        }
+
+        .about-image{
+            flex:1;
+            height:400px;
+            border-radius:20px;
+            overflow:hidden;
+            border:1px solid rgba(199,255,50,0.2);
+        }
+
+        .about-image img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+        }
+
+        .features{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:25px;
+        }
+
+        .feature{
+            background:#171a10;
+            padding:35px 25px;
+            border-radius:18px;
+            border:1px solid rgba(199,255,50,0.12);
+            text-align:center;
+            transition:0.3s;
+        }
+
+        .feature:hover{
+            transform:translateY(-8px);
+            border-color:#C7FF32;
+        }
+
+        .feature span{
+            font-size:38px;
+            color:#C7FF32;
+        }
+
+        .feature h3{
+            margin:18px 0 12px;
+        }
+
+        .feature p{
+            color:#999;
+            line-height:1.7;
+        }
+
+        footer{
+            text-align:center;
+            padding:35px 20px;
+            border-top:1px solid rgba(199,255,50,0.12);
+            color:#888;
+        }
+
+        footer b{
+            color:#C7FF32;
+        }
+
+        .popup{
+            display:none;
+            position:fixed;
+            z-index:2000;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,0.9);
+            justify-content:center;
+            align-items:center;
+            padding:30px;
+        }
+
+        .popup img{
+            max-width:90%;
+            max-height:85%;
+            border-radius:15px;
+        }
+
+        .close{
+            position:absolute;
+            top:25px;
+            right:40px;
+            font-size:45px;
+            color:#C7FF32;
+            cursor:pointer;
+        }
+
+        @media(max-width:900px){
+
+            .hero h2{
+                font-size:55px;
+            }
+
+            .gallery{
+                grid-template-columns:repeat(2,1fr);
+            }
+
+            .features{
+                grid-template-columns:1fr;
+            }
+
+            .about{
+                flex-direction:column;
+            }
+
+            .about-image{
+                width:100%;
+            }
+        }
+
+        @media(max-width:600px){
+
+            header{
+                flex-direction:column;
+                gap:20px;
+            }
+
+            .box-2{
+                gap:22px;
+                font-size:15px;
+            }
+
+            .hero{
+                min-height:550px;
+            }
+
+            .hero h2{
+                font-size:42px;
+            }
+
+            .hero p{
+                font-size:15px;
+            }
+
+            section{
+                padding:65px 5%;
+            }
+
+            .section-title h2{
+                font-size:35px;
+            }
+
+            .gallery{
+                grid-template-columns:1fr;
+            }
+
+            .gallery-item{
+                height:280px;
+            }
+
+            .about-text h2{
+                font-size:38px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+
+        <div class="box-1">
+            <h1>Vision <b>.</b></h1>
+        </div>
+
+        <div class="box-2">
+            <a href="#home">Home</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#about">About</a>
+        </div>
+
+    </header>
+
+
+    <!-- HOME -->
+    <section class="hero" id="home">
+
+        <div>
+            <h2>
+                Explore The
+                <i class="green">Visual</i>
+                <br>
+                <i class="green">World.</i>
+            </h2>
+
+            <p>
+                A modern responsive image gallery built with HTML, CSS and JavaScript.
+                Explore beautiful moments through a premium interactive experience.
+            </p>
+            <br><br><br><br>
+
+            <a href="#gallery" class="hero-btn">Explore Gallery</a>
+        </div>
+
+    </section>
+
+
+    <!-- GALLERY -->
+    <section id="gallery">
+
+        <div class="section-title">
+            <h2>Our <span class="green">Gallery</span></h2>
+            <p>Discover our collection of beautiful visual moments.</p>
+        </div>
+
+        <div class="gallery">
+
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=80" alt="Nature">
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=80" alt="Mountain">
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80" alt="Beach">
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=80" alt="Landscape">
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=80" alt="Forest">
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=80" alt="Desert">
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+    <section id="about">
+
+        <div class="about">
+
+            <div class="about-text">
+
+                <h2>
+                    See The World
+                    <span class="green">Differently.</span>
+                </h2>
+
+                <p>
+                    Vision is a modern visual gallery created to showcase beautiful
+                    photography and creative moments in a clean and premium environment.
+                </p>
+
+                <p>
+                    Our goal is to provide a simple, elegant and responsive experience
+                    where every image tells its own story.
+                </p>
+
+                <a href="#gallery" class="hero-btn">View Collection</a>
+
+            </div>
+
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80" alt="Beautiful Mountain">
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+    <section>
+
+        <div class="section-title">
+            <h2>Why <span class="green">Vision?</span></h2>
+            <p>A premium experience designed for modern users.</p>
+        </div>
+
+        <div class="features">
+
+            <div class="feature">
+                <span>✦</span>
+                <h3>Premium Design</h3>
+                <p>
+                    Clean and modern interface designed to give your website
+                    a professional visual identity.
+                </p>
+            </div>
+
+            <div class="feature">
+                <span>◈</span>
+                <h3>Responsive</h3>
+                <p>
+                    The website automatically adjusts to desktop, tablet
+                    and mobile screen sizes.
+                </p>
+            </div>
+
+            <div class="feature">
+                <span>⌁</span>
+                <h3>Interactive</h3>
+                <p>
+                    Interactive gallery elements provide a smooth and engaging
+                    experience for visitors.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <p>
+            © 2026 <b>Vision</b>. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <!-- IMAGE POPUP -->
+    <div class="popup" id="popup">
+
+        <span class="close" id="close">&times;</span>
+
+        <img id="popupImage" src="" alt="Gallery Preview">
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script>
+
+        const galleryImages = document.querySelectorAll(".gallery-item img");
+        const popup = document.getElementById("popup");
+        const popupImage = document.getElementById("popupImage");
+        const close = document.getElementById("close");
+
+        galleryImages.forEach(function(image){
+
+            image.addEventListener("click", function(){
+
+                popup.style.display = "flex";
+                popupImage.src = image.src;
+
+            });
+
+        });
+
+        close.addEventListener("click", function(){
+
+            popup.style.display = "none";
+
+        });
+
+        popup.addEventListener("click", function(e){
+
+            if(e.target === popup){
+
+                popup.style.display = "none";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
+```
